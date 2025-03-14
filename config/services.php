@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'http' => [
+        'verify' => storage_path('cacert.pem'),
+    ],
+
 ];

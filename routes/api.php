@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\{RegisterController, LoginController,ForgotPasswordController,ResetPasswordController};
-use App\Http\Controllers\Api\{UserController};
+use App\Http\Controllers\Api\{UserController,NewsController};
 
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [LoginController::class, 'login'])->name('login');
@@ -12,4 +12,6 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [LoginController::class, 'logout']);
     Route::get('user', [UserController::class, 'userDetails']);
+
+    Route::get('news', [NewsController::class, 'newsAPI']);
 });
