@@ -39,6 +39,16 @@ class UserSeeder extends Seeder
             ];
         }
 
+        $users[] = [
+            'id' => Str::uuid(),
+            'name' => 'Kirubha',
+            'email' => 'kirubharaj777@gmail.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
         User::insert($users);
     }
 }

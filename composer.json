@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "darkaonline/l5-swagger": "^9.0",
+        "doctrine/annotations": "^2.0",
         "jcobhams/newsapi": "^1.0",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
@@ -45,8 +46,7 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-             "@php artisan l5-swagger:generate"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -61,7 +61,6 @@
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
         ],
         "post-install-cmd": [
-            "@php artisan l5-swagger:generate"
         ]
     },
     "extra": {

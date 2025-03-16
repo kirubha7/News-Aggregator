@@ -5,10 +5,9 @@ namespace App\Repositories;
 use App\Models\{Article};
 use App\Repositories\Contracts\ArticleRepositoryInterface;
 use Illuminate\Support\Facades\{Lang,Log};
-
 class ArticleRepository implements ArticleRepositoryInterface
-
 {
+
     public function getArticlesByUserPreferences($user)
     {
         $userPreferences = $user->preferences()->with(['authors', 'categories', 'sources'])->first();

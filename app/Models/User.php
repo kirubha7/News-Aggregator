@@ -9,21 +9,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\ModelTrait;
 
- /**
-     * @OA\Schema(
-     *     schema="User",
-     *     title="User",
-     *     description="User model",
-     *     type="object",
-     *     required={"id", "name", "email"},
-     *     @OA\Property(property="id", type="integer", example=1),
-     *     @OA\Property(property="name", type="string", example="John Doe"),
-     *     @OA\Property(property="email", type="string", format="email", example="johndoe@example.com"),
-     *     @OA\Property(property="created_at", type="string", format="date-time", example="2025-03-14T12:34:56Z"),
-     *     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-03-14T12:34:56Z")
-     * )
-     */
-
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

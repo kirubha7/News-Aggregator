@@ -44,7 +44,7 @@ return [
                  * Absolute paths to directory containing the swagger annotations are stored.
                  */
                 'annotations' => [
-                    base_path('app/Swagger'),
+                    base_path('app'),
                 ],
             ],
         ],
@@ -82,8 +82,6 @@ return [
              * Absolute path to location where parsed annotations will be stored
              */
             'docs' => storage_path('api-docs'),
-
-            'storage' => storage_path('api-docs'),
 
             /*
              * Absolute path to directory where to export views
@@ -219,22 +217,13 @@ return [
                 */
             ],
             'security' => [
-                /*
-                 * Examples of Securities
-                 */
                 [
-                    /*
-                    'oauth2_security_example' => [
-                        'read',
-                        'write'
+                    'sanctum' => [
+                        'type' => 'http',
+                        'scheme' => 'bearer',
+                        'bearerFormat' => 'JWT',
                     ],
-
-                    'passport' => []
-                    */
                 ],
-                [
-                    'bearerAuth' => []
-                ]
             ],
         ],
 

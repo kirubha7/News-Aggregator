@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\{RegisterController, LoginController,ForgotPasswordController,ResetPasswordController};
 use App\Http\Controllers\Api\{UserController,NewsController};
 
+
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
