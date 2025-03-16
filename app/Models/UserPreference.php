@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ModelTrait;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class UserPreference extends Model
 {
-    use ModelTrait;
+    use ModelTrait,HasUuids;
 
     protected $fillable = ['user_id'];
 
     public function authors()
     {
-        return $this->belongsToMany(Author::class, 'user_preferred_authors', 'user_id', 'author_id');
+        return $this->hasMany(UserPreferredAuthor::class, 'user_id', 'id');
     }
 
     public function categories()

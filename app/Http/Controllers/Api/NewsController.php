@@ -4,49 +4,65 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Carbon\Carbon;
-use DateTimeImmutable;
-use Guardian\GuardianAPI;
+use App\Helpers\ResponseHelper;
+use App\Repositories\Contracts\{ArticleRepositoryInterface};
+use Illuminate\Support\Facades\{Lang,Log};
+
 class NewsController extends Controller
 {
-    public function newsAPI(Request $request){
+    protected $articleRepository;
 
-        $source = $request->query('source');
+    public function __construct(ArticleRepositoryInterface $articleRepository)
+    {
+        $this->articleRepository = $articleRepository;
+    }
 
-        // Define API endpoints and parameters
-        $apiConfig = [
-            'guardian' => [
-                'url' => 'https://content.guardianapis.com/search',
-                'params' => [
-                    'api-key' => env('GUARDIAN_API_KEY'),
-                    'tag' => 'film/film,tone/reviews',
-                    'from-date' => '2025-01-01',
-                    'to-date' => now()->toDateString(),
-                    'order-by' => 'relevance',
-                    'show-fields' => 'starRating,headline,thumbnail,short-url',
-                    'show-tags' => 'contributor',
-                    'q' => 'cinema',
-                    'page' => 1,
-                    'page-size' => 20
-                ]
-            ],
-            'newsapi' => [
-                'url' => 'https://newsapi.org/v2/top-headlines',
-                'params' => [
-                    'apiKey' => env('NEWS_API_KEY'),
-                    'pageSize' => 5,
-                    'page' => 1,
-                    'category' => 'sports'
-                ]
-            ]
-        ];
+    public function getArticlesByUserPreferences(){
+        try{
+            Log::info('NewsController@getArticlesByUserPreferences: Get Preferences News');
 
-        // Fetch data using Laravel HTTP Client
-        $response = Http::withOptions(['verify' => storage_path('cacert.pem')])
-            ->get($apiConfig[$source]['url'], $apiConfig[$source]['params']);
+            $data = $this->articleRepository->getArticlesByUserPreferences(auth()->user());
 
-        return $response->json();
+            // Return success response
+            return ResponseHelper::success(Lang::get('messages.preferences_news'), $data, 200);
+        }catch(\Exception $e){
+            Log::error('NewsController@getArticlesByUserPreferences: ' . $e->getMessage());
+
+            // Return error response
+            return ResponseHelper::error($e->getMessage(), [], 500);
+        }
+    }
+
+    public function getArticles(Request $request){
+        try{
+            Log::info('NewsController@getArticles: Get Preferences News');
+
+            $data = $this->articleRepository->getArticles($request);
+
+            // Return success response
+            return ResponseHelper::success(Lang::get('messages.news'), $data, 200);
+        }catch(\Exception $e){
+            Log::error('NewsController@getArticles: ' . $e->getMessage());
+
+            // Return error response
+            return ResponseHelper::error($e->getMessage(), [], 500);
+        }
+    }
+
+    public function getArticle(Request $request,$id){
+        try{
+            Log::info('NewsController@getArticle: Get Preferences News');
+
+            $data = $this->articleRepository->getArticle($id);
+
+            // Return success response
+            return ResponseHelper::success(Lang::get('messages.news'), $data, 200);
+        }catch(\Exception $e){
+            Log::error('NewsController@getArticle: ' . $e->getMessage());
+
+            // Return error response
+            return ResponseHelper::error($e->getMessage(), [], 500);
+        }
     }
 
 }

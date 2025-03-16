@@ -20,7 +20,6 @@ class NewsApi extends NewsAPIBase
 
     protected function extractArticles($response)
     {
-        Log::info($response);
         return $response['articles'] ?? [];
     }
 

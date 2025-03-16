@@ -21,5 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+        if (file_exists(app_path('Docs/Swagger.php'))) {
+            require_once app_path('Docs/Swagger.php');
+        }
     }
 }

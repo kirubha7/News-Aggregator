@@ -15,7 +15,6 @@ trait NewsTrait
                     'verify' => storage_path('cacert.pem')
                     ])
                     ->get($url, $params);
-
         return $response->json();
     }
 

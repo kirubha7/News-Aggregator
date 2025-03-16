@@ -9,6 +9,21 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\ModelTrait;
 
+ /**
+     * @OA\Schema(
+     *     schema="User",
+     *     title="User",
+     *     description="User model",
+     *     type="object",
+     *     required={"id", "name", "email"},
+     *     @OA\Property(property="id", type="integer", example=1),
+     *     @OA\Property(property="name", type="string", example="John Doe"),
+     *     @OA\Property(property="email", type="string", format="email", example="johndoe@example.com"),
+     *     @OA\Property(property="created_at", type="string", format="date-time", example="2025-03-14T12:34:56Z"),
+     *     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-03-14T12:34:56Z")
+     * )
+     */
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -49,5 +64,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function preferences()
+    {
+        return $this->hasOne(UserPreference::class);
+    }
+
+    public function preferredAuthors()
+    {
+        return $this->hasMany(UserPreferredAuthor::class, 'user_id', 'id');
+    }
+
+    public function preferredCategories()
+    {
+        return $this->belongsToMany(Category::class, 'user_preferred_categories', 'user_id', 'category_id');
+    }
+
+    public function preferredSources()
+    {
+        return $this->belongsToMany(Source::class, 'user_preferred_sources', 'user_id', 'source_id');
     }
 }

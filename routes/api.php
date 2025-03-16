@@ -10,8 +10,23 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('logout', [LoginController::class, 'logout']);
-    Route::get('user', [UserController::class, 'userDetails']);
 
-    Route::get('news', [NewsController::class, 'newsAPI']);
+    //Logout
+    Route::post('logout', [LoginController::class, 'logout']);
+
+    //Pre Defined API's
+    Route::get('authors',[UserController::class, 'authors']);
+    Route::get('category',[UserController::class, 'category']);
+    Route::get('sources',[UserController::class, 'sources']);
+
+    //User
+    Route::get('user', [UserController::class, 'userDetails']);
+    Route::post('user/preferences', [UserController::class, 'updatePreferences']);
+
+    //Articles
+    Route::get('news/preferences',[NewsController::class,'getArticlesByUserPreferences']);
+    Route::get('news/feed',[NewsController::class,'getArticles']);
+    Route::get('news/feed/{id}',[NewsController::class,'getArticle']);
+
+
 });

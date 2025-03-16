@@ -37,7 +37,6 @@ abstract class NewsAPIBase
     {
         $params = $this->getApiParams($source, $category, $page);
         $response = $this->fetchNews($source->api_url, $params);
-
         if (!$this->validateResponse($response)) {
             Log::warning("Invalid response for category: {$category->name}, Page: $page", ['response' => $response]);
             return;

@@ -43,7 +43,7 @@ class FetchNews extends Command
     private function fetchFromSource($source)
     {
         return match ($source->name) {
-            'NEWS API' => (new NewsApi())->fetchArticles($source),
+        'NEWS API' => (new NewsApi())->fetchArticles($source),
             'The Guardian' => (new GuardianAPI())->fetchArticles($source),
             'The New York Times' => (new NYTimesAPI())->fetchArticles($source),
             default => [],
