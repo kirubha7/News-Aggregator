@@ -1,4 +1,4 @@
-# Use the official PHP image with required extensions
+# Use official PHP image with required extensions
 FROM php:8.2-fpm
 
 # Set working directory

@@ -1126,36 +1126,93 @@
         "schemas": {
             "Article": {
                 "title": "Article",
-                "description": "Article model",
+                "description": "Article model representing a news article",
+                "required": [
+                    "id",
+                    "title",
+                    "source_id",
+                    "status"
+                ],
                 "properties": {
                     "id": {
-                        "type": "integer",
-                        "example": 1
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "550e8400-e29b-41d4-a716-446655440000"
                     },
                     "title": {
                         "type": "string",
-                        "example": "Breaking News"
+                        "maxLength": 191,
+                        "example": "Breaking News: Laravel Releases New Update"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "A short summary of the article"
                     },
                     "content": {
                         "type": "string",
-                        "example": "This is the content of the article"
+                        "example": "Full content of the article goes here..."
                     },
                     "author": {
                         "type": "string",
-                        "example": "John Doe"
+                        "maxLength": 191,
+                        "example": "John Doe",
+                        "nullable": true
                     },
-                    "category_id": {
-                        "type": "integer",
-                        "example": 2
+                    "url": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "https://news.example.com/article/123",
+                        "nullable": true
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "https://news.example.com/article/image.jpg",
+                        "nullable": true
                     },
                     "source_id": {
-                        "type": "integer",
-                        "example": 5
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                    },
+                    "category_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "b2c3d4e5-f678-90ab-cdef-234567890abc",
+                        "nullable": true
                     },
                     "published_at": {
                         "type": "string",
                         "format": "date-time",
-                        "example": "2025-03-16T12:00:00Z"
+                        "example": "2025-03-16T17:51:59+05:30",
+                        "nullable": true
+                    },
+                    "status": {
+                        "description": "1 = Active, 0 = Inactive",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "view_count": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-16T18:00:00+05:30",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-16T16:00:00+05:30",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-16T16:30:00+05:30",
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -1171,12 +1228,12 @@
     },
     "tags": [
         {
-            "name": "News",
-            "description": "News related APIs"
-        },
-        {
             "name": "Authentication",
             "description": "Authentication"
+        },
+        {
+            "name": "News",
+            "description": "News"
         },
         {
             "name": "User",
