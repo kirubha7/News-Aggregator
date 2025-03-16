@@ -55,7 +55,7 @@ docker exec -it laravel_app php artisan key:generate
 
 ### 6️⃣ Run Database Migrations & Seeders
 ```sh
-docker exec -it laravel_app php artisan migrate --seed
+docker exec -it laravel_app php artisan migrate:fresh --seed
 ```
 
 ### 7️⃣ Access the Application
