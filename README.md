@@ -26,7 +26,7 @@ Then, update database credentials to match Docker's MySQL service:
 ```env
 DB_CONNECTION=mysql
 DB_HOST=db
-DB_PORT=3307
+DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=laravel_user
 DB_PASSWORD=secret
@@ -65,7 +65,7 @@ docker exec -it laravel_app php artisan migrate:fresh --seed
 
 ### 7️⃣ Access the ApplicationTo manually run the scheduled tasks:
 ```sh
-docker exec -it laravel_app php artisan schedule:run
+docker exec -it laravel_app php artisan schedule:work
 ```
 
 ### 8️⃣ Running Tests

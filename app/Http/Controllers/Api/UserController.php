@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Log,Auth,Lang};
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\Api\User\UserPreferenceRequest;
-use App\Models\{Article,Category,Source,UserPreferredAuthor};
+use App\Models\{Article,Category,Source,UserPreferredAuthor,UserPreferredCategory,UserPreferredSource};
 use App\Repositories\Contracts\PreDefinedDataRepositoryInterface;
 
 class UserController extends Controller
@@ -172,29 +172,30 @@ class UserController extends Controller
 
             $user = auth()->user();
             $preferences = $user->preferences()->firstOrCreate(['user_id' => $user->id]);
-
             $validated = $request->validated();
 
             if (!empty($validated['authors'])) {
-                UserPreferredAuthor::where('user_id', $user->id)->delete();
-
-                $insertData = collect($validated['authors'])->map(fn ($author) => [
+                // Upsert authors (Many-to-One)
+                $authorData = collect($validated['authors'])->map(fn ($author) => [
                     'user_id' => $user->id,
                     'author' => $author
                 ])->toArray();
 
-                UserPreferredAuthor::upsert(
-                    $insertData,
-                    ['user_id', 'author'],
-                );
+                UserPreferredAuthor::upsert($authorData, ['user_id', 'author']);
             }
 
-            // Sync the relationships
-            $preferences->categories()->sync($validated['category'] ?? []);
-            $preferences->sources()->sync($validated['sources'] ?? []);
+            if (!empty($validated['category'])) {
+                // Sync categories (Many-to-Many)
+                $user->preferredCategories()->sync($validated['category']);
+            }
+
+            if (!empty($validated['sources'])) {
+                // Sync sources (Many-to-Many)
+                $user->preferredSources()->sync($validated['sources']);
+            }
 
             // Reload preferences with relationships
-            $preferences->load(['authors', 'categories:id,name', 'sources:id,name']);
+            $user->load(['preferredAuthors', 'preferredCategories:id,name', 'preferredSources:id,name']);
 
             $data['user'] = $user;
             $data['preferences'] = $preferences;
@@ -202,7 +203,7 @@ class UserController extends Controller
             return ResponseHelper::success(Lang::get('messages.update_preferences'), $data, 200);
         }catch(\Exception $e){
             Log::error('UserController@updatePreferences: ' . $e->getMessage());
-
+            Log::error($e);
             // Return error response
             return ResponseHelper::error($e->getMessage(), [], 500);
         }

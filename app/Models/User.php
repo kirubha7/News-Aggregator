@@ -63,11 +63,14 @@ class User extends Authenticatable
 
     public function preferredCategories()
     {
-        return $this->belongsToMany(Category::class, 'user_preferred_categories', 'user_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'user_preferred_categories', 'user_id', 'category_id')
+                    ->withPivot(['user_id', 'category_id']) ;
     }
 
     public function preferredSources()
     {
-        return $this->belongsToMany(Source::class, 'user_preferred_sources', 'user_id', 'source_id');
+        return $this->belongsToMany(Source::class, 'user_preferred_sources', 'user_id', 'source_id')
+                    ->withPivot(['user_id', 'source_id']);
     }
+
 }
