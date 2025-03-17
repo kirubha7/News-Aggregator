@@ -30,6 +30,11 @@ DB_PORT=3307
 DB_DATABASE=laravel
 DB_USERNAME=laravel_user
 DB_PASSWORD=secret
+
+NEWS_API_KEY=25aeba89b0094ca89dfdbb18d7d46ebf
+GUARDIAN_API_KEY=346a8716-d9ee-48bf-9094-332c2175e9bc
+NYTIMES_API_KEY=VPOMBCjAX1DGY31EwPiw6OADwrI4ImXt
+NYTIMES_API_SECRET=NhFgd3RDkgRNgQPg
 ```
 
 ### 3️⃣ Start the Application with Docker
@@ -58,11 +63,16 @@ docker exec -it laravel_app php artisan key:generate
 docker exec -it laravel_app php artisan migrate:fresh --seed
 ```
 
-### 7️⃣ Access the Application
+### 7️⃣ Access the ApplicationTo manually run the scheduled tasks:
+```sh
+docker exec -it laravel_app php artisan schedule:run
+```
+
+### 8️⃣ Running Tests
 - API will be available at: [http://localhost:8080](http://localhost:8080)
 - Swagger documentation at: `http://localhost:8080/api/documentation`
 
-### 8️⃣ Running Tests
+### 9️⃣ Schedule News Aggregation Command
 To run the test suite:
 ```sh
 docker exec -it laravel_app php artisan test

@@ -57,7 +57,7 @@ class SourceSeeder extends Seeder
                 'url' => 'https://developer.nytimes.com/apis',
                 'api_url' => 'https://api.nytimes.com/svc/search/v2/articlesearch.json',
                 'api_key' => env('NYTIMES_API_KEY'),
-                'api_secret' => env('NYTIMES_API_KEY'),
+                'api_secret' => env('NYTIMES_API_SECRET'),
                 'default_params' => json_encode([
                     "q"=> "election",
                     "api-key" => env('NYTIMES_API_KEY')
