@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Console\ClosureCommand;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\{Artisan,Schedule};
-use App\Console\Commands\{FetchNews, FetchOldNewsApi};
+use App\Console\Commands\{FetchNews};
 
 Artisan::command('inspire', function () {
     /** @var ClosureCommand $this */
